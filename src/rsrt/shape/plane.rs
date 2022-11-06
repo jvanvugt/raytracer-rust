@@ -27,11 +27,11 @@ impl Plane {
 impl Shape for Plane {
     fn intersect(&self, ray: &Ray) -> Option<Hit> {
         let denom = self.normal.dot(&ray.direction);
-        if denom.abs() < 1e-3 {
+        if denom.abs() < 1e-10 {
             return None;
         }
         let t = (self.p - self.normal.dot(&ray.origin)) / denom;
-        if t < 1e-3 {
+        if t < 1e-10 {
             None
         } else {
             Some(Hit::from_ray(t, ray, self.normal, &self.material))

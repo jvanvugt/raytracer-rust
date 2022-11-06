@@ -31,8 +31,6 @@ impl Material for Dielectric {
         } else {
             (hit.normal, 1.0 / self.reflection_index, -d)
         };
-        assert!(near_equal(hit.normal.sq_length(), 1.0, 1e-3));
-        assert!(near_equal(ray.direction.sq_length(), 1.0, 1e-3));
         let refracted = refract(&ray.direction, &outward_normal, ni_over_nt);
         let direction = if refracted.is_some() && schlick(cosine, self.reflection_index) <= rand01()
         {
