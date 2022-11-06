@@ -1,3 +1,4 @@
+use crate::material::dielectric::Dielectric;
 use crate::material::material::Material;
 use crate::material::{lambertian::Lambertian, metal::Metal};
 use crate::shape::shape::{Shape, ShapeType};
@@ -45,24 +46,25 @@ impl World {
                 Lambertian::new(Vec3::new(140.0 / 255.0, 245.0 / 255.0, 98.0 / 255.0)).into(),
             )
             .into(),
-            Sphere::new(
-                Vec3::new(-2.0, 0.0, 2.0),
-                1.0,
-                Metal::new(Vec3::ONE, 0.2).into(),
-            )
-            .into(),
-            Sphere::new(
-                Vec3::new(0.0, 0.0, 2.0),
-                1.0,
-                Lambertian::new(Vec3::new(1.0, 200.0 / 255.0, 210.0 / 255.0)).into(),
-            )
-            .into(),
-            Sphere::new(
-                Vec3::new(2.0, 0.0, 2.0),
-                1.0,
-                Metal::new(Vec3::new(0.8, 0.75, 1.0), 0.0).into(),
-            )
-            .into(),
+            // Sphere::new(
+            //     Vec3::new(-2.0, 0.0, 2.0),
+            //     1.0,
+            //     Metal::new(Vec3::ONE, 0.2).into(),
+            // )
+            // .into(),
+            // Sphere::new(
+            //     Vec3::new(0.0, 0.0, 2.0),
+            //     1.0,
+            //     Lambertian::new(Vec3::new(1.0, 200.0 / 255.0, 210.0 / 255.0)).into(),
+            // )
+            // .into(),
+            // Sphere::new(
+            //     Vec3::new(2.0, 0.0, 2.0),
+            //     1.0,
+            //     Metal::new(Vec3::new(0.8, 0.75, 1.0), 0.0).into(),
+            // )
+            // .into(),
+            Sphere::new(Vec3::new(0.0, 0.0, 2.0), 1.0, Dielectric::new(1.5).into()).into(),
         ])
     }
 }

@@ -2,6 +2,7 @@ use enum_dispatch::enum_dispatch;
 
 use crate::{ray::Ray, vec3::Vec3};
 
+use super::dielectric::Dielectric;
 use super::hit::Hit;
 use super::lambertian::Lambertian;
 use super::metal::Metal;
@@ -20,6 +21,7 @@ impl Scatter {
 pub enum MaterialType {
     Lambertian,
     Metal,
+    Dielectric,
 }
 
 #[enum_dispatch(MaterialType)]
