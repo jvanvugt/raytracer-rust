@@ -26,17 +26,17 @@ impl Shape for Sphere {
     fn intersect(&self, ray: &Ray) -> Option<Hit> {
         let a = ray.direction.sq_length();
         let rel_pos = ray.origin - self.position;
-        let b = 2.0 * ray.direction.dot(&rel_pos);
+        let half_b = ray.direction.dot(&rel_pos);
         let c = rel_pos.sq_length() - self.radius * self.radius;
 
-        let discriminant = b * b - 4.0 * a * c;
+        let discriminant = half_b * half_b - a * c;
         if discriminant < 0.0 {
             return None;
         }
         let d_sqrt = discriminant.sqrt();
-        let mut t = (-b - d_sqrt) / (2.0 * a);
+        let mut t = (-half_b - d_sqrt) / a;
         if t < 0.0 {
-            t = (-b + d_sqrt) / (2.0 * a);
+            t = (-half_b + d_sqrt) / a;
         }
         if t <= 1e-3 {
             return None;
