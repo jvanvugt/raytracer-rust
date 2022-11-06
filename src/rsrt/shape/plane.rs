@@ -27,7 +27,7 @@ impl Plane {
 impl Shape for Plane {
     fn intersect(&self, ray: &Ray) -> Option<Hit> {
         let denom = self.normal.dot(&ray.direction);
-        if denom.abs() < 1e-6 {
+        if denom.abs() < 1e-3 {
             return None;
         }
         let t = (self.p - self.normal.dot(&ray.origin)) / denom;

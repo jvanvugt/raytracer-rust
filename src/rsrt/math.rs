@@ -1,14 +1,14 @@
 use std::cell::RefCell;
 
 use crate::vec3::Vec3;
-use rand::{rngs::SmallRng, Rng, SeedableRng};
+use rand::{Rng, SeedableRng};
 
 pub fn reflect(incoming: &Vec3, normal: &Vec3) -> Vec3 {
     *incoming - *normal * normal.dot(incoming) * 2.0
 }
 
 thread_local! {
-    pub static RNG: RefCell<SmallRng> = RefCell::new(SmallRng::seed_from_u64(0));
+    pub static RNG: RefCell<rand_xoshiro::Xoroshiro128Plus> = RefCell::new(rand_xoshiro::Xoroshiro128Plus::seed_from_u64(0));
 }
 
 pub fn rand01() -> f32 {
