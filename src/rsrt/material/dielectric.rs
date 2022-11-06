@@ -1,5 +1,5 @@
 use crate::{
-    math::{rand01, reflect, refract, schlick},
+    math::{near_equal, rand01, reflect, refract, schlick},
     ray::Ray,
     vec3::Vec3,
 };
@@ -31,6 +31,8 @@ impl Material for Dielectric {
         } else {
             (hit.normal, 1.0 / self.reflection_index, -d)
         };
+        assert!(near_equal(hit.normal.sq_length(), 1.0, 1e-3));
+        assert!(near_equal(ray.direction.sq_length(), 1.0, 1e-3));
         let refracted = refract(&ray.direction, &outward_normal, ni_over_nt);
         let direction = if refracted.is_some() && schlick(cosine, self.reflection_index) <= rand01()
         {
