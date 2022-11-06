@@ -13,9 +13,9 @@ impl World {
         Self { objects }
     }
 
-    pub fn cast_ray(&self, ray: &Ray, bounced: u32, max_bounces: u32) -> Vec3 {
-        if bounced > max_bounces {
-            return Vec3::ZERO;
+    pub fn cast_ray(&self, ray: &Ray, bounced: u32, max_bounces: u32) -> (Vec3, u32) {
+        if bounced >= max_bounces {
+            return (Vec3::ZERO, bounced);
         }
         let closest_hit = self
             .objects
@@ -25,14 +25,15 @@ impl World {
         if let Some(hit) = closest_hit {
             let scatter = hit.material.scatter(ray, &hit);
             if let Some(scatter) = scatter {
-                self.cast_ray(&scatter.ray, bounced + 1, max_bounces) * scatter.attenuation
+                let (color, bounced) = self.cast_ray(&scatter.ray, bounced + 1, max_bounces);
+                (color * scatter.attenuation, bounced)
             } else {
-                Vec3::ZERO
+                (Vec3::ZERO, bounced)
             }
         } else {
             let y = (ray.direction.y + 1.0) / 2.0;
             let res = Vec3::new(0.6, 0.6, 1.0) * y + Vec3::ONE * (1.0 - y);
-            res.clamp(&Vec3::ZERO, &Vec3::ONE)
+            (res.clamp(&Vec3::ZERO, &Vec3::ONE), bounced)
         }
     }
 

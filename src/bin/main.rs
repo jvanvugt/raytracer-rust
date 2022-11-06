@@ -1,10 +1,10 @@
 use raytracer_rs::{camera::Camera, renderer::Renderer, vec3::Vec3, world::World};
 
-const WIDTH: u32 = 1280;
-const HEIGHT: u32 = 720;
+const WIDTH: u32 = 640;
+const HEIGHT: u32 = 360;
 const FOV: f32 = 90.0;
-const NUM_SAMPLES: u32 = 100;
-const MAX_BOUNCES: u32 = 50;
+const NUM_SAMPLES: u32 = 10;
+const MAX_BOUNCES: u32 = 10;
 
 fn main() {
     let camera = Camera::new(

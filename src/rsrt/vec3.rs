@@ -1,6 +1,6 @@
 use std::ops::{Add, Div, Mul, Neg, Sub};
 
-use rand::Rng;
+use crate::math::rand_m1_1;
 
 #[derive(Copy, Clone, Debug)]
 pub struct Vec3 {
@@ -85,10 +85,8 @@ impl Vec3 {
     }
 
     pub fn random_inside_unit() -> Self {
-        let mut rng = rand::thread_rng();
-        let mut random = || rng.gen_range(-1.0..1.0);
         loop {
-            let v = Vec3::new(random(), random(), random());
+            let v = Vec3::new(rand_m1_1(), rand_m1_1(), rand_m1_1());
             if v.sq_length() < 1.0 {
                 return v;
             }
