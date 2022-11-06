@@ -11,6 +11,7 @@ rand_xoshiro = "0.6.0"
 lazy_static = "1.4.0"
 image = "0.24.4"
 enum_dispatch = "0.3.8"
+rayon = "1.5.3"
 
 [profile.release]
 debug = 1

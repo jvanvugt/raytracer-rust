@@ -3,6 +3,7 @@ use std::time::Instant;
 use image::{ImageBuffer, RgbImage};
 
 use crate::{camera::Camera, math::rand01, vec3::Vec3, world::World};
+use rayon::prelude::*;
 
 pub struct Renderer {
     pub num_samples: u32,
@@ -41,16 +42,21 @@ impl Renderer {
 
     pub fn render(&self, camera: &Camera, world: &World, width: u32, height: u32) -> RgbImage {
         let mut img: RgbImage = ImageBuffer::new(width, height);
-        let mut total_rays = 0;
-
         let start_time = Instant::now();
-        for y in 0..height {
-            for x in 0..width {
-                let (color, n_rays) = self.process_pixel(x, y, &camera, &world);
-                img.put_pixel(x, height - y - 1, to_color(color));
-                total_rays += n_rays;
-            }
-        }
+        let total_rays = img
+            .enumerate_rows_mut()
+            .par_bridge()
+            .map(|(_, row)| {
+                let mut row_rays = 0;
+                for (_, (x, y, pix)) in row.enumerate() {
+                    let (color, n_rays) = self.process_pixel(x, height - y - 1, &camera, &world);
+                    *pix = to_color(color);
+                    row_rays += n_rays;
+                }
+                row_rays
+            })
+            .sum::<u64>();
+
         let render_time = start_time.elapsed().as_secs_f64();
         println!(
             "Simulated {} rays in {}s. {:.0} rays/s",
