@@ -17,6 +17,8 @@ impl Scatter {
         Self { attenuation, ray }
     }
 }
+
+#[derive(Clone, Copy)]
 #[enum_dispatch]
 pub enum MaterialType {
     Lambertian,

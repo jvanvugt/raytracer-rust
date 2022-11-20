@@ -5,6 +5,7 @@ use super::{
     material::{Material, Scatter},
 };
 
+#[derive(Clone, Copy, Debug)]
 pub struct Metal {
     pub albedo: Vec3,
     pub fuzz: f32,

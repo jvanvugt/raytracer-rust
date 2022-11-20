@@ -29,6 +29,10 @@ pub fn near_equal(a: f32, b: f32, eps: f32) -> bool {
     (a - b).abs() < eps
 }
 
+pub fn in01(n: f32) -> bool {
+    (0.0..1.0).contains(&n)
+}
+
 thread_local! {
     pub static RNG: RefCell<rand_xoshiro::Xoroshiro128Plus> = RefCell::new(rand_xoshiro::Xoroshiro128Plus::seed_from_u64(0));
 }

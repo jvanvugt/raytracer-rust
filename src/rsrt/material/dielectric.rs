@@ -9,6 +9,7 @@ use super::{
     material::{Material, Scatter},
 };
 
+#[derive(Clone, Copy, Debug)]
 pub struct Dielectric {
     reflection_index: f32,
 }

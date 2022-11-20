@@ -5,6 +5,7 @@ use super::{
     material::{Material, Scatter},
 };
 
+#[derive(Clone, Copy, Debug)]
 pub struct Lambertian {
     pub albedo: Vec3,
 }
